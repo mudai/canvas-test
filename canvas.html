@@ -15,8 +15,18 @@
   <script src="http://coffeescript.org/extras/coffee-script.js"></script>
 
   <script type="text/coffeescript">
-    class BarGraph
-      
+    class window.BarGraph
+      canvas: null # インスタンス変数
+      mouse_position:
+        x: null
+        y: null
+      ctx: null
+
+      constructor: (@elem) -> # initializer
+        @canvas = document.getElementById(elem)
+        return false  if not @canvas or not @canvas.getContext
+        @ctx = @canvas.getContext("2d")
+
     canvas = null
     mouse =
       x: null
