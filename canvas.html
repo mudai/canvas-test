@@ -16,13 +16,17 @@
 
   <script type="text/coffeescript">
     canvas = null
+    mouse =
+      x: null
+      y: null
+    ctx = null
 
     init = ->
       canvas = document.getElementById("canvas")
       return false  if not canvas or not canvas.getContext
-  
-    draw = ->
       ctx = canvas.getContext("2d")
+
+    mouse_init = ->
       canvas.addEventListener "mousemove", (e) ->
         mouse_pos e
         $("#xy").text mouse.x + "x" + mouse.y
@@ -40,7 +44,8 @@
         mouse.y = e.clientY - rect.top
         console.log "call"  if ctx.isPointInPath(mouse.x, mouse.y)
         return
-    
+
+    draw_axis = ->
       ctx.beginPath()
       ctx.moveTo 0, 0
       ctx.lineTo canvas.width, 0
@@ -54,7 +59,7 @@
       ctx.lineTo 500, 300
       ctx.stroke() # 線を引く
       ctx.beginPath()
-      
+    draw_data = ->
       #ctx.stroke();
       ctx.rect 100, 230, 50, 70
       ctx.fillRect 100, 230, 50, 70
@@ -64,12 +69,15 @@
       ctx.fillRect 300, 200, 50, 100
       ctx.rect 400, 150, 50, 150
       ctx.fillRect 400, 150, 50, 150
-      return
-    mouse =
-      x: null
-      y: null
+
+    draw = ->
+      draw_axis()
+      draw_data()
+    
+      
     $ ->
       init()
+      mouse_init()
       draw()
   </script>
 
