@@ -10,82 +10,72 @@
     <title>Canvas</title>
   </head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="http://underscorejs.org/underscore-min.js"></script>
+  <script src="http://backbonejs.org/backbone-min.js"></script>
+  <script src="http://coffeescript.org/extras/coffee-script.js"></script>
+
+  <script type="text/coffeescript">
+    canvas = null
+
+    init = ->
+      canvas = document.getElementById("canvas")
+      return false  if not canvas or not canvas.getContext
+  
+    draw = ->
+      ctx = canvas.getContext("2d")
+      canvas.addEventListener "mousemove", (e) ->
+        mouse_pos e
+        $("#xy").text mouse.x + "x" + mouse.y
+        return
+    
+      canvas.addEventListener "mouseout", (e) ->
+        mouse.x = null
+        mouse.y = null
+        $("#xy").text mouse.x + "x" + mouse.y
+        return
+    
+      mouse_pos = (e) ->
+        rect = e.target.getBoundingClientRect()
+        mouse.x = e.clientX - rect.left
+        mouse.y = e.clientY - rect.top
+        console.log "call"  if ctx.isPointInPath(mouse.x, mouse.y)
+        return
+    
+      ctx.beginPath()
+      ctx.moveTo 0, 0
+      ctx.lineTo canvas.width, 0
+      ctx.lineTo canvas.width, canvas.height
+      ctx.lineTo 0, canvas.height
+      ctx.closePath() # 枠を閉じる
+      ctx.stroke() # 枠線を引く
+      ctx.beginPath()
+      ctx.moveTo 100, 100
+      ctx.lineTo 100, 300
+      ctx.lineTo 500, 300
+      ctx.stroke() # 線を引く
+      ctx.beginPath()
+      
+      #ctx.stroke();
+      ctx.rect 100, 230, 50, 70
+      ctx.fillRect 100, 230, 50, 70
+      ctx.rect 200, 100, 50, 200
+      ctx.fillRect 200, 100, 50, 200
+      ctx.rect 300, 200, 50, 100
+      ctx.fillRect 300, 200, 50, 100
+      ctx.rect 400, 150, 50, 150
+      ctx.fillRect 400, 150, 50, 150
+      return
+    mouse =
+      x: null
+      y: null
+    $ ->
+      init()
+      draw()
+  </script>
 
   <body>
     <h1>Canvas</h1>
     <canvas id="canvas" width="600" height="400"></canvas>
     <span id="xy"></span>
   </body>
-  <script type="text/javascript">
-// マウスの座標を格納
-var mouse = {x: null, y: null};
-
-onload = function() {
-  draw();
-};
-function draw() {
-  var canvas = document.getElementById('canvas');
-  if ( ! canvas || ! canvas.getContext ) {
-    return false;
-  }
-
-  var ctx = canvas.getContext('2d');
-
-  canvas.addEventListener("mousemove", function(e){
-      mouse_pos(e);
-      $("#xy").text(mouse.x + "x" + mouse.y);
-
-    }
-  );
-
-  canvas.addEventListener("mouseout", function(e){
-      mouse.x = null;
-      mouse.y = null;
-      $("#xy").text(mouse.x + "x" + mouse.y);
-
-    }
-  );
-
-  var mouse_pos = function(e){
-     var rect = e.target.getBoundingClientRect();
-     mouse.x = e.clientX - rect.left;
-     mouse.y = e.clientY - rect.top;
-     if ( ctx.isPointInPath(mouse.x, mouse.y) ) {
-       console.log("call");
-     }
-  }
-
-
-  ctx.beginPath();
-  ctx.moveTo(0, 0);
-  ctx.lineTo(canvas.width, 0);
-  ctx.lineTo(canvas.width, canvas.height);
-  ctx.lineTo(0, canvas.height);
-  ctx.closePath(); // 枠を閉じる
-  ctx.stroke(); // 枠線を引く
-
-  ctx.beginPath();
-  ctx.moveTo(100, 100);
-  ctx.lineTo(100, 300);
-  ctx.lineTo(500, 300);
-  ctx.stroke(); // 線を引く
-
-  ctx.beginPath();
-  //ctx.stroke();
-  ctx.rect(100, 230, 50, 70);
-  ctx.fillRect(100, 230, 50, 70);
-
-  ctx.rect(200, 100, 50, 200);
-  ctx.fillRect(200, 100, 50, 200);
-
-  ctx.rect(300, 200, 50, 100);
-  ctx.fillRect(300, 200, 50, 100);
-
-  ctx.rect(400, 150, 50, 150);
-  ctx.fillRect(400, 150, 50, 150);
-
-//  ctx.beginPath(); //ホバーするオブジェクトは一番上に置いておく
-
-}
-  </script>
 </html>
