@@ -17,15 +17,20 @@
   <script type="text/coffeescript">
     class window.BarGraph
       canvas: null # インスタンス変数
-      mouse_position:
+      ctx: null
+      mouse_position =
         x: null
         y: null
-      ctx: null
 
-      constructor: (@elem) -> # initializer
+      constructor: (elem) -> # initializer
+        @elem = elem
         @canvas = document.getElementById(elem)
         return false  if not @canvas or not @canvas.getContext
         @ctx = @canvas.getContext("2d")
+        alert @elem
+        alert @canvas
+        alert @ctx
+
 
     canvas = null
     mouse =
