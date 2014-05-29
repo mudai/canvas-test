@@ -17,15 +17,32 @@
   <script type="text/coffeescript">
     class window.BarGraph
       canvas: null # インスタンス変数
-      mouse_position:
+      ctx: null
+      mouse_location =
         x: null
         y: null
-      ctx: null
 
-      constructor: (@elem) -> # initializer
+      constructor: (elem) -> # initializer
+        @elem = elem
         @canvas = document.getElementById(elem)
         return false  if not @canvas or not @canvas.getContext
         @ctx = @canvas.getContext("2d")
+
+        @canvas.addEventListener "mousemove", (e) ->
+          mouse_position(e, @ctx)
+          $("#xy").text mouse_location.x + "x" + mouse_location.y
+          
+        @canvas.addEventListener "mouseout", (e) ->
+          mouse_position(e, @ctx)
+          mouse_location.x = null
+          mouse_location.y = null
+          $("#xy").text mouse_location.x + "x" + mouse_location.y
+
+        mouse_position = (e) ->
+          rect = e.target.getBoundingClientRect()
+          mouse_location.x = e.clientX - rect.left
+          mouse_location.y = e.clientY - rect.top
+          console.log "call"  if ctx.isPointInPath(mouse_location.x, mouse_location.y)
 
     canvas = null
     mouse =
@@ -88,9 +105,9 @@
     
       
     $ ->
-      init()
-      mouse_init()
-      draw()
+      # init()
+      # mouse_init()
+      # draw()
   </script>
 
   <body>
