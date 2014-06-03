@@ -16,39 +16,33 @@
 
   <script type="text/coffeescript">
     class window.LongPress
-      down = false
-      timer = null
-      selector: null
+      constructor: (selector) ->
+        @down = false
+        @selector = $(selector)
 
-      set_event: ->
-        @selector.mousedown(->
-          alert ''
-          down = true
-          clearTimeout(timer)
-          timer = setTimeout ->
-            longpress()
-            return
+        @selector.mousedown(=>
+          @down = true
+          clearTimeout(@timer)
+          @timer = setTimeout =>
+            @longpress()
           , 2000
-          return
         )
-        @selector.mouseout ->
-          down = false
-          clearTimeout(timer)
+        
+        @selector.mouseout =>
+          @down = false
+          clearTimeout(@timer)
               
-        @selector.mouseup ->
-          down = false
-          clearTimeout(timer)
+        @selector.mouseup =>
+          @down = false
+          clearTimeout(@timer)
 
       longpress: ->
-        if down
+        if @down
           alert 'LongPress!!'
 
-      constructor: (selector) ->
-        @selector = $(selector)
-        @set_event()
+    $(document).ready ->
+      new LongPress '#browser'
 
-    $ ->
-      new LongPress 'browser'
   </script>
 
   <body>
