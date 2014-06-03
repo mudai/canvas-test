@@ -20,7 +20,8 @@
         @down = false
         @selector = $(selector)
 
-        @selector.mousedown(=>
+        @selector.mousedown( (e) =>
+          console.log e.pageX + 'x' + e.pageY
           @down = true
           clearTimeout(@timer)
           @timer = setTimeout =>
@@ -28,6 +29,9 @@
           , 2000
         )
         
+        $('html').mousemove (e) =>
+          console.log e.pageX + 'x' + e.pageY
+  
         @selector.mouseout =>
           @down = false
           clearTimeout(@timer)
@@ -47,6 +51,7 @@
 
   <body>
     <h1>mouse</h1>
+    <span id="locatedpoint">●</span>
     <p id='browser' style='background-color:blue;width:120px;'>
       onclick
     </p>
