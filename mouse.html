@@ -13,7 +13,18 @@
   <script src="http://underscorejs.org/underscore-min.js"></script>
   <script src="http://backbonejs.org/backbone-min.js"></script>
   <script src="http://coffeescript.org/extras/coffee-script.js"></script>
-
+  <script src="http://isotope.metafizzy.co/isotope.pkgd.min.js"></script>
+  <style type="text/css">
+    iframe{
+      border:none;
+      width:1000px;
+      height:1200px;
+      -webkit-transform: scale(0.33);
+      -webkit-transform-origin: 0 0;
+      margin:0px;
+      padding:0px;
+    }
+  </style>
   <script type="text/coffeescript">
     class window.LongPress
       constructor: (selector) ->
@@ -51,9 +62,16 @@
 
   <body>
     <h1>mouse</h1>
-    <span id="locatedpoint">●</span>
     <p id='browser' style='background-color:blue;width:120px;'>
       onclick
-    </p>
+      </p>
+    <div style='width:500px;'>
+      <iframe src="http://www.yahoo.co.jp/"></iframe>
+    </div>
+    <div style='width:500px;'>
+    <iframe src="http://www.yahoo.co.jp/"></iframe>
+    </div>
+    <iframe src="http://www.yahoo.co.jp/"></iframe>
+    <iframe src="http://www.yahoo.co.jp/"></iframe>
   </body>
 </html>
